@@ -10,7 +10,9 @@
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scroll-behavior: smooth;
         }
         .background {
             position: fixed;
@@ -20,6 +22,7 @@
             height: 100%;
             background-color: #000033;
             overflow: hidden;
+            z-index: -1;
         }
         .dot {
             position: absolute;
@@ -27,23 +30,25 @@
             border-radius: 50%;
         }
         .content-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             text-align: center;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            padding-bottom: 50px;
         }
         .title {
             color: white;
-            font-size: 64px;
-            margin-bottom: 20px;
+            font-size: clamp(36px, 10vw, 64px);
+            margin-bottom: 10px;
             background: linear-gradient(45deg, #ff00ff, #00ffff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .glass-effect {
-            width: 600px;
-            height: 200px;
+            width: 100%;
+            height: auto;
+            min-height: 200px;
             padding: 40px;
             background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
             backdrop-filter: blur(10px);
@@ -54,17 +59,22 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: background 0.3s ease;
+            box-sizing: border-box;
         }
         #typewriter {
-            color: white;
-            font-size: 18px;
-            text-align: left;
+            color: #b6b5b5;
+            font-size: clamp(16px, 3vw, 18px);
+            text-align: center;
             flex-grow: 1;
             overflow: hidden;
-            background: linear-gradient(45deg, #ff00ff, #00ffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
+        }
+        #typewriter .highlight {
+            color: #21b821;
+        }
+        .button-wrapper {
+            text-align: center;
         }
         .button {
             display: inline-block;
@@ -73,11 +83,10 @@
             color: rgba(234, 229, 229, 0.647);
             text-decoration: none;
             border-radius: 5px;
-            font-size: 18px;
+            font-size: clamp(14px, 3vw, 18px);
             transition: all 0.3s;
             position: relative;
             overflow: hidden;
-            align-self: center;
         }
         .button::after {
             content: '';
@@ -93,15 +102,69 @@
         .button:hover::after {
             transform: rotate(30deg) translate(50%, 50%);
         }
+        .subtitle {
+            color: #e0e0e0;
+            font-size: clamp(20px, 5vw, 28px);
+            margin-top: 30px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .description {
+            color: #b6b5b5;
+            font-size: clamp(14px, 2.5vw, 16px);
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .image-placeholder {
+            width: 32%;
+            aspect-ratio: 1 / 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="background" id="background"></div>
     <div class="content-wrapper">
-        <h1 class="title">CiteWise</h1>
-        <div class="glass-effect">
+        <h1 class="title">Supercharge your research.</h1>
+        <div class="glass-effect" id="glass-effect">
             <div id="typewriter"></div>
-            <a href="#" class="button">Join the Waitlist</a>
+            <div class="button-wrapper">
+                <a href="#" class="button">Join the Waitlist</a>
+            </div>
+        </div>
+        <h2 class="subtitle">Your research sidekick</h2>
+        <p class="description">
+            CiteWise is more than just a run-of-the-mill research assistant; it's a dynamic suite of tools designed to empower researchers across disciplines. Whether you're a seasoned professor, a curious grad student, or even an AI language model like me, CiteWise has your back.<br><br>
+            Inspired by the brilliant minds of researchers who've pondered the mysteries of multiverse muffins (or not). 🧁
+        </p>
+        <div class="image-container">
+            <div class="image-placeholder glow"><img src="img1.png" alt="CiteWise feature 1"></div>
+            <div class="image-placeholder glow"><img src="img2.png" alt="CiteWise feature 2"></div>
+            <div class="image-placeholder glow"><img src="img3.png" alt="CiteWise feature 3"></div>
         </div>
     </div>
 
@@ -138,23 +201,42 @@
 
         // Typewriter effect
         const sentences = [
-            "Supercharge your research. Utilise advanced toolkits for brainstorming and paper writing.",
+            "CiteWise provides advanced toolkits for brainstorming and paper writing. Reduce your research workloads by <span class='highlight'>80%</span>",
         ];
 
         let sentenceIndex = 0;
         let charIndex = 0;
-        let typingSpeed = 50;
+        let typingSpeed = 20;
 
         function typeWriter() {
             const currentSentence = sentences[sentenceIndex];
             const typewriterElement = document.getElementById('typewriter');
 
             if (charIndex < currentSentence.length) {
-                typewriterElement.innerHTML += currentSentence.charAt(charIndex);
-                charIndex++;
+                if (currentSentence.substr(charIndex, 6) === "<span ") {
+                    const endIndex = currentSentence.indexOf("</span>", charIndex) + 7;
+                    typewriterElement.innerHTML += currentSentence.substring(charIndex, endIndex);
+                    charIndex = endIndex;
+                } else {
+                    typewriterElement.innerHTML += currentSentence.charAt(charIndex);
+                    charIndex++;
+                }
                 setTimeout(typeWriter, typingSpeed);
             }
         }
+
+        // Hover effect
+        const glassEffect = document.getElementById('glass-effect');
+        glassEffect.addEventListener('mousemove', (e) => {
+            const rect = glassEffect.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            glassEffect.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2), rgba(255,255,255,0.1) 40%, rgba(255,255,255,0) 60%)`;
+        });
+
+        glassEffect.addEventListener('mouseleave', () => {
+            glassEffect.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0))';
+        });
 
         // Initialize
         createDots();
