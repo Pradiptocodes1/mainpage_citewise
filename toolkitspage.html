@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Tiles with Hover Effect</title>
+    <title>Toolkits</title>
     <style>
         body, html {
             margin: 0;
@@ -275,8 +275,6 @@
                 "Cooking dependencies...",
                 "waking up the llms...",
                 "just a couple more seconds pls...",
-                "we almost there....",
-                "high traffic alert, just a couple of seconds more delay...."
             ];
 
             let messageIndex = 0;
@@ -285,7 +283,7 @@
             const messageInterval = setInterval(() => {
                 messageIndex = (messageIndex + 1) % loadingMessages.length;
                 loadingText.textContent = loadingMessages[messageIndex];
-            }, 2000);
+            }, 6000);
 
             setTimeout(() => {
                 clearInterval(messageInterval);
