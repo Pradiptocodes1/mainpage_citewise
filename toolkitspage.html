@@ -181,7 +181,7 @@
         <div class="tile" id="tile1">
             <img src="img1.png" alt="Random Image 1">
             <div class="tile-content">
-                <button class="goto-btn" data-url="https://example.com/logicquill">
+                <button class="goto-btn" data-url="https://logicquill.vercel.app/">
                     <span class="front">Launch logicquill</span>
                 </button>
                 <div class="loading">
@@ -212,7 +212,7 @@
         <div class="tile" id="tile3">
             <img src="img3.png" alt="Random Image 3">
             <div class="tile-content">
-                <button class="goto-btn" data-url="https://example.com/image3">
+                <button class="goto-btn" data-url="https://ideosynth.onrender.com">
                     <span class="front">Launch IdeoSynth</span>
                 </button>
                 <div class="loading">
@@ -273,7 +273,6 @@
 
             const loadingMessages = [
                 "Cooking dependencies...",
-                "installing packages...",
                 "waking up the llms...",
                 "just a couple more seconds pls...",
                 "we almost there....",
@@ -286,12 +285,12 @@
             const messageInterval = setInterval(() => {
                 messageIndex = (messageIndex + 1) % loadingMessages.length;
                 loadingText.textContent = loadingMessages[messageIndex];
-            }, 4000);
+            }, 2000);
 
             setTimeout(() => {
                 clearInterval(messageInterval);
                 window.location.href = url;
-            }, 6000); // Redirecting after 6 seconds (3 messages * 2 seconds each)
+            }, 1000);
         });
     });
 </script>
