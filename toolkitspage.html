@@ -275,6 +275,8 @@
                 "Cooking dependencies...",
                 "waking up the llms...",
                 "just a couple more seconds pls...",
+                "we almost there....",
+                "high traffic alert, just a couple of seconds more delay...."
             ];
 
             let messageIndex = 0;
@@ -283,12 +285,12 @@
             const messageInterval = setInterval(() => {
                 messageIndex = (messageIndex + 1) % loadingMessages.length;
                 loadingText.textContent = loadingMessages[messageIndex];
-            }, 6000);
+            }, 2000);
 
             setTimeout(() => {
                 clearInterval(messageInterval);
                 window.location.href = url;
-            }, 1000);
+            }, 6000);
         });
     });
 </script>
